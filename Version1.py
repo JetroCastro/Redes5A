@@ -41,3 +41,5 @@ def eliminar_router(nombre):
 
 # INICIALIZAR BASE DE DATOS
 inicializar_db()
+
+# choripan
