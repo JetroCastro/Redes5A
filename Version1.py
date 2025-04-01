@@ -17,7 +17,8 @@ def inicializar_db():
         cursor.execute('''CREATE TABLE IF NOT EXISTS routers (
                             id INTEGER PRIMARY KEY AUTOINCREMENT,
                             nombre TEXT UNIQUE NOT NULL,
-                            ip TEXT NOT NULL)''')
+                            ip TEXT NOT NULL,
+                            solicitud TEXT)''')
         conexion.commit()
 
 # FUNCIÓN PARA AÑADIR UN ROUTER
@@ -46,6 +47,26 @@ def modificar_router(nombre_actual, nuevo_nombre, nueva_ip):
         cursor.execute("UPDATE routers SET nombre = ?, ip = ? WHERE nombre = ?", (nuevo_nombre, nueva_ip, nombre_actual))
         conexion.commit()
         return cursor.rowcount > 0
+
+# FUNCIÓN PARA MODIFICAR SOLICITUD DE UN ROUTER
+def modificar_solicitud_router(nombre_actual, nueva_solicitud):
+    with conectar_db() as conexion:
+        cursor = conexion.cursor()
+        cursor.execute("UPDATE routers SET solicitud = ? WHERE nombre = ?", (nueva_solicitud, nombre_actual))
+        conexion.commit()
+        return cursor.rowcount > 0
+
+# FUNCIÓN PARA ENVIAR SOLICITUD DE REPARACIÓN Y REVISIÓN
+def enviar_solicitud_reparacion_revision(nombre_router, solicitud):
+    with conectar_db() as conexion:
+        cursor = conexion.cursor()
+        cursor.execute("UPDATE routers SET solicitud = ? WHERE nombre = ?", (solicitud, nombre_router))
+        conexion.commit()
+        return cursor.rowcount > 0
+
+# INICIALIZAR BASE DE DATOS
+inicializar_db()
+
 
 # INICIALIZAR BASE DE DATOS
 inicializar_db()
