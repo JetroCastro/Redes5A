@@ -39,7 +39,14 @@ def eliminar_router(nombre):
         conexion.commit()
         return cursor.rowcount > 0
 
+# FUNCIÓN PARA MODIFICAR DATOS DE UN ROUTER
+def modificar_router(nombre_actual, nuevo_nombre, nueva_ip):
+    with conectar_db() as conexion:
+        cursor = conexion.cursor()
+        cursor.execute("UPDATE routers SET nombre = ?, ip = ? WHERE nombre = ?", (nuevo_nombre, nueva_ip, nombre_actual))
+        conexion.commit()
+        return cursor.rowcount > 0
+
 # INICIALIZAR BASE DE DATOS
 inicializar_db()
 
-# choripan
